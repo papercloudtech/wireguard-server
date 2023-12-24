@@ -1,7 +1,9 @@
 __pycache__/
-migrations/
+api/migrations/
 venv/
-
+.venv/
 *.db
 *.sqlite3
 .env
+.idea
+.vscode
