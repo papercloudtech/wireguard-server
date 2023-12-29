@@ -30,6 +30,4 @@ def console_view(request):
 
 def get_config(request):
     config_file = generate_key("10.0.0.0", requests.get('https://checkip.amazonaws.com').text.strip())
-    print(config_file)
-    print("eww")
     return HttpResponse(config_file, content_type="text/plain")
