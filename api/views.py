@@ -1,6 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from .key_manager import generate_key
+import requests
 
 
 def login_view(request):
@@ -26,3 +28,8 @@ def console_view(request):
     return render(request, 'api/dashboard.html')
 
 
+def get_config(request):
+    config_file = generate_key("10.0.0.0", requests.get('https://checkip.amazonaws.com').text.strip())
+    print(config_file)
+    print("eww")
+    return HttpResponse(config_file, content_type="text/plain")
