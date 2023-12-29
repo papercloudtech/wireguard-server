@@ -9,5 +9,5 @@ def generate_key(client_ip, server_ip):
     config_file = open(f"/etc/wireguard/clients/{client_ip}/client.conf").read()
     return config_file
 
-
-generate_key("10.0.0.0", "20.111.24.98")
+if __name__ == "__main__":
+    generate_key("10.0.0.0", "20.111.24.98")
