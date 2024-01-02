@@ -15,7 +15,8 @@ class Client(models.Model):
 
     def _generate_unique_ip(self):
         network = ipaddress.ip_network(self.SUBNET)
-        existing_ips = set(Client.objects.values_list('ip_address', flat=True)) + ["10.0.0.0"]
+        existing_ips = set(Client.objects.values_list('ip_address', flat=True))
+        existing_ips.add("10.0.0.0")
         available_ips = [str(ip) for ip in network.hosts() if str(ip) not in existing_ips]
 
         if not available_ips:
