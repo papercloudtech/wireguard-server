@@ -6,7 +6,7 @@ from .key_manager import generate_key
 
 class Client(models.Model):
     name = models.CharField(max_length=10)
-    ip_address = models.CharField(max_length=15, unique=True, null=True, blank=True)
+    ip_address = models.GenericIPAddressField(protocol="ipv4", unique=True, null=True, blank=True)
     config = models.TextField(blank=True, null=True)
     SUBNET = "10.0.0.0/24"
 
