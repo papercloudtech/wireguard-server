@@ -4,9 +4,60 @@
 {% endblock %}
 {% block page_content %}
     <div class="dashboard-content px-3 pt-4">
-        <h2 class="fs-5"> Users Page    </h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, totam? Sequi alias eveniet ut quas
-            ullam delectus et quasi incidunt rem deserunt asperiores reiciendis assumenda doloremque provident,
-            dolores aspernatur neque.</p>
+        <h2 class="fs-5 text-center mb-2"> Tunnels </h2>
+        <br>
+        {% for client in clients %}
+            <div class="flex ">
+                <div class="card mb-2">
+                    <div class="d-flex justify-content-between">
+                        <div class="card-body my-auto">
+                            {{ client.name }}
+                        </div>
+                        <div class="card-body text-end ">
+                            <button class="btn btn-primary align-items-center justify-content-center">
+                                Config &nbsp
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                     class="bi bi-arrow-down-square" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                          d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm8.5 2.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        <br>
+        <div class="container text-center ">
+            <div class="shadow btn btn-success d-inline-flex align-items-center justify-content-center">
+                Add User &nbsp
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-plus-square" viewBox="0 0 16 16">
+                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                </svg>
+            </div>
+        </div>
+        <br>
+
+        <div class="container text-center">
+            <nav class="text-center mx-auto align-items-center" aria-label="...">
+                <ul class="d-flex justify-content-center pagination text-center">
+
+                    <li class="shadow page-item disabled">
+                        <a class="page-link">Previous</a>
+                    </li>
+                    <li class="shadow page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="shadow page-item active" aria-current="page">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="shadow page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="shadow page-item">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
     </div>
 {% endblock %}

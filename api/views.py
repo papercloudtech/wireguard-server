@@ -25,7 +25,6 @@ def login_view(request):
 def console_view(request):
     if request.method == "POST":
         pass
-    current_configs = Client.objects.all()
     return render(request, 'api/dashboard.html')
 
 
@@ -43,7 +42,8 @@ def logout_user(request):
 
 @login_required(login_url='login')
 def manage_users(request):
-    return render(request, 'api/users.html')
+    current_configs = Client.objects.all()
+    return render(request, 'api/users.html', {'clients': current_configs})
 
 
 @login_required(login_url='login')
