@@ -1,23 +1,23 @@
 from django.shortcuts import render, redirect, HttpResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .key_manager import generate_key
 import requests
+from api.models import Client
 
 
 def login_view(request):
     if request.user.is_authenticated:
-        redirect('/dashboard')
+        return redirect('console')
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         print(username, password)
         user = authenticate(request, username=username, password=password)
-        print(user)
         if user is not None:
             login(request, user)
             print("Logged in")
-            return render(request, 'api/dashboard.html')
+            return redirect('console')
         else:
             return render(request, 'api/login.html')
     return render(request, 'api/login.html')
@@ -25,9 +25,34 @@ def login_view(request):
 
 @login_required(login_url='login')
 def console_view(request):
+    if request.method == "POST":
+        pass
+    current_configs = Client.objects.all()
     return render(request, 'api/dashboard.html')
 
 
-def get_config(request):
-    config_file = generate_key("10.0.0.0")
-    return HttpResponse(config_file, content_type="text/plain")
+def home(request):
+    if request.user.is_authenticated:
+        return redirect('console')
+    return redirect('login')
+
+
+def logout_user(request):
+    if request.user.is_authenticated:
+        logout(request)
+    return redirect('login')
+
+
+@login_required(login_url='login')
+def manage_users(request):
+    return render(request, 'api/users.html')
+
+
+@login_required(login_url='login')
+def performance_page(request):
+    return render(request, 'api/performance.html')
+
+
+@login_required(login_url='settings')
+def manage_settings(request):
+    return render(request, 'api/settings.html')
