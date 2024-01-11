@@ -11,13 +11,13 @@ usage() {
   echo "Usage: $0 -c client_ip [-i interface_name=wg0]"
 }
 
-public_key=""
+client_ip=""
 interface_name="wg0"
 
 while getopts ":c:i:h" opt; do
   case $opt in
     c)
-      public_key="$OPTARG"
+      client_ip="$OPTARG"
       ;;
     i)
       interface_name="$OPTARG"
@@ -39,7 +39,7 @@ while getopts ":c:i:h" opt; do
   esac
 done
 
-if [ -z "$public_key" ]; then
+if [ -z "$client_ip" ]; then
   echo "Error: Argument \"-c\" is required." >&2
   usage
   exit 1
