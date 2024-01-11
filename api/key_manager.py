@@ -11,7 +11,7 @@ def generate_key(client_ip):
     if clients_exist and current_client_exist:
         print('exist')
     else:
-        os.system(f"sudo bash /usr/local/bin/wireguard-keygen.sh -c {client_ip} -s {SERVER_IP}")
+        os.system(f"sudo bash /server/scripts/client-gen.sh -c {client_ip} -s {SERVER_IP}")
     config_file = open(f"/etc/wireguard/clients/{client_ip}/client.conf").read()
     return config_file
 
