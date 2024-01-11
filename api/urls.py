@@ -7,7 +7,8 @@ urlpatterns = [
     path('console', views.console_view, name='console'),
     path('console/users', views.manage_users, name='users'),
     path('console/performance', views.performance_page, name='performance'),
-    path('console/settings',views.manage_settings,name='settings'),
+    path('console/settings', views.manage_settings, name='settings'),
     path('', views.home, name='home'),
+    path('config/<int:pk>', views.download_config, name='config'),
     path('logout', views.logout_user, name='logout')
 ]

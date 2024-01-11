@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .key_manager import generate_key
-import requests
+from django.http import FileResponse
+from io import StringIO
 from api.models import Client
 
 
@@ -51,6 +51,14 @@ def performance_page(request):
     return render(request, 'api/performance.html')
 
 
-@login_required(login_url='settings')
+@login_required(login_url='login')
 def manage_settings(request):
     return render(request, 'api/settings.html')
+
+
+@login_required(login_url='login')
+def download_config(request, pk):
+    current_config = Client.objects.get(pk=pk)
+    response = HttpResponse(current_config.config, content_type='text/plain')
+    response['Content-Disposition'] = f'attachment; filename="{current_config.name}.conf"'
+    return response
