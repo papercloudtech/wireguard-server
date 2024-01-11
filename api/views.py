@@ -42,6 +42,10 @@ def logout_user(request):
 
 @login_required(login_url='login')
 def manage_users(request):
+    if request.method == "POST":
+        newuser = Client.objects.create(name=request.POST['username'])
+        newuser.save()
+        return redirect('users')
     current_configs = Client.objects.all()
     return render(request, 'api/users.html', {'clients': current_configs})
 
