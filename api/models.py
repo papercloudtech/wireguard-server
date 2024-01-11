@@ -1,7 +1,7 @@
 from django.db import models
 import ipaddress
 import random
-from .key_manager import generate_key
+from .key_manager import generate_key, delete_key
 
 
 class Client(models.Model):
@@ -25,11 +25,14 @@ class Client(models.Model):
         return random.choice(available_ips)
 
     def save(self, *args, **kwargs):
-        print(self.ip_address)
         if not self.ip_address:
             self.ip_address = self._generate_unique_ip()
         self.config = self.gen_conf()
         super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        delete_key(self.ip_address)
+        super().delete(*args, **kwargs)
 
     def __str__(self):
         return f'{self.name} - {self.ip_address}'

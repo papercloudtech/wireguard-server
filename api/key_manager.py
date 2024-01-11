@@ -16,5 +16,10 @@ def generate_key(client_ip):
     return config_file
 
 
+def delete_key(client_ip):
+    os.system(f"sudo bash /server/scripts/client-rm.sh -c {client_ip}")
+
+
+
 if __name__ == "__main__":
     generate_key("10.0.0.0")
