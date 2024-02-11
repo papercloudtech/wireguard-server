@@ -9,6 +9,7 @@ urlpatterns = [
     path('console/performance', views.performance_page, name='performance'),
     path('console/settings', views.manage_settings, name='settings'),
     path('', views.home, name='home'),
-    path('config/<int:pk>', views.download_config, name='config'),
-    path('logout', views.logout_user, name='logout')
+    path('config/<int:pk>', views.download_config, name='create_config'),
+    path('config/delete/<int:pk>', views.delete_config, name='delete_config'),
+    path('logout', views.logout_user, name='logout'),
 ]

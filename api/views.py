@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import FileResponse
-from io import StringIO
 from api.models import Client
 
 
@@ -66,3 +64,11 @@ def download_config(request, pk):
     response = HttpResponse(current_config.config, content_type='text/plain')
     response['Content-Disposition'] = f'attachment; filename="{current_config.name}.conf"'
     return response
+
+
+@login_required(login_url='login')
+def delete_config(request, pk):
+    current_config = Client.objects.get(pk=pk)
+    current_config.delete()
+    current_configs = Client.objects.all()
+    return redirect('users')
