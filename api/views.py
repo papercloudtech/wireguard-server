@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -44,8 +45,13 @@ def manage_users(request):
         newuser = Client.objects.create(name=request.POST['username'])
         newuser.save()
         return redirect('users')
-    current_configs = Client.objects.all()
-    return render(request, 'api/users.html', {'clients': current_configs})
+
+    current_configs = Client.objects.all().order_by("id")
+    paginated_configs = Paginator(current_configs, request.GET.get("per_page", 10)).get_page(
+        request.GET.get("page", 1)
+    )
+
+    return render(request, 'api/users.html', {'clients': paginated_configs})
 
 
 @login_required(login_url='login')

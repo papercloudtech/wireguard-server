@@ -151,20 +151,29 @@
         <div class="container text-center">
             <nav class="text-center mx-auto align-items-center" aria-label="...">
                 <ul class="d-flex justify-content-center pagination text-center">
-
-                    <li class="shadow page-item disabled">
-                        <a class="page-link">Previous</a>
-                    </li>
-                    <li class="shadow page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="shadow page-item active" aria-current="page">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="shadow page-item"><a class="page-link" href="#">3</a></li>
+                    {% if clients.has_previous %}
                     <li class="shadow page-item">
-                        <a class="page-link" href="#">Next</a>
+                        <a class="page-link" href="?page={{ clients.previous_page_number }}">Previous</a>
                     </li>
-
+                    {% endif %}
+                    {% for page_number in clients.paginator.get_elided_page_range %}
+                    {% if page_number == clients.paginator.ELLIPSIS %}
+                    <li class="shadow page-item" aria-current="page">
+                        <a class="page-link">...</a>
+                    </li>
+                    {% else %}
+                    <li class="shadow page-item" aria-current="page">
+                        <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if clients.has_next %}
+                    <li class="shadow page-item">
+                        <a class="page-link" href="?page={{ clients.next_page_number }}">Next</a>
+                    </li>
+                    {% endif %}
                 </ul>
+                <small>Displaying: {{ clients.start_index }}-{{ clients.end_index }} of {{ clients.paginator.count }}</small>
             </nav>
         </div>
     </div>
