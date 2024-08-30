@@ -5,7 +5,7 @@ import requests
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('DJANGO_SECURITY_KEY', get_random_secret_key())
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', get_random_secret_key())
 SERVER_IP = requests.get('https://checkip.amazonaws.com').text.strip()
 DEBUG = True
 ALLOWED_HOSTS = ['*']
