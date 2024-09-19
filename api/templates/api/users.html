@@ -24,7 +24,11 @@
                     correctLevel: QRCode.CorrectLevel.Q
 
                 });
-                console.log(qrcode);
+                $('#addUserForm').on('submit', function(event) {
+                    event.preventDefault();
+                    $('#saveUserBtn').attr('disabled', true).text('Saving...');
+                    this.submit();
+                });
             });
         {% endfor %}
     </script>
@@ -49,7 +53,7 @@
                         <h5 class="modal-title" id="addUserModalLabel">Add User</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form method="POST">
+                    <form method="POST" id="addUserForm">
                         {% csrf_token %}
                         <div class="modal-body">
                             <div class="row g-3 align-items-center">
@@ -57,21 +61,20 @@
                                     <label for="newusername" class="col-form-label">username</label>
                                 </div>
                                 <div class="col-auto">
-                                    <input name="username" type="text" id="newusername" class="form-control"
-                                           aria-describedby="usernamedHelpInline">
+                                    <input name="username" type="text" id="newusername" class="form-control" aria-describedby="usernamedHelpInline">
                                 </div>
                                 <div class="col-auto">
-                                <span id="usernameHelpInline" class="form-text">
-                                  Must be 4-15 characters long.
-                                </span>
+                                    <span id="usernameHelpInline" class="form-text">
+                                        Must be 4-15 characters long.
+                                    </span>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-primary" id="saveUserBtn">Save changes</button>
                         </div>
-                    </form>
+                    </form>                    
                 </div>
             </div>
         </div>
