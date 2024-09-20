@@ -36,3 +36,28 @@ class Client(models.Model):
 
     def __str__(self):
         return f'{self.name} - {self.ip_address}'
+    
+from django.db import models
+from django.utils import timezone
+import secrets
+from datetime import timedelta
+
+
+class ApiKey(models.Model):
+    key = models.CharField(max_length=40, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+
+    def save(self, *args, **kwargs):
+        if not self.key:
+            self.key = self.generate_key()
+        super().save(*args, **kwargs)
+
+    def generate_key(self):
+        return secrets.token_urlsafe(32)
+
+    def is_expired(self):
+        return timezone.now() > self.expires_at
+
+    def __str__(self):
+        return self.key

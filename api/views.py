@@ -3,6 +3,10 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from api.models import Client
+from django.http import JsonResponse
+from .decorators import api_key_required
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 def login_view(request):
@@ -78,3 +82,22 @@ def delete_config(request, pk):
     current_config.delete()
     current_configs = Client.objects.all()
     return redirect('users')
+
+@csrf_exempt
+@api_key_required
+def manage_users_api(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        if not name:
+            return JsonResponse({'error': 'Missing user name'}, status=400)
+
+        new_user = Client.objects.create(name=name)
+        new_user.save()
+
+        return JsonResponse({'message': 'User created', 'name': new_user.name, 'ip': new_user.ip_address}, status=201)
+
+    elif request.method == "GET":
+        clients = Client.objects.all().values('id', 'name', 'ip_address')
+        return JsonResponse(list(clients), safe=False, status=200)
+    
+    return JsonResponse({'error': 'Invalid method'}, status=405)
